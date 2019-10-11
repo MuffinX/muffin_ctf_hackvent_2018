@@ -1,0 +1,122 @@
+<html>
+<body>
+  {% if session.get('user') %}
+
+    <pre style="margin-left:20px;">
+
+      Your AUTH_TOKEN: {{ player_auth_token }}
+
+      Attention: By regenerating your AUTH_TOKEN you have to update:
+      /home/tunnel/auth_token
+      With you new AUTH_TOKEN and restart your virtual machine!
+    </pre>
+    <button style="margin-left:65px;" class="negative ui button" onclick="$('#viewport').load('regenerate_auth_token');"><i class="exclamation triangle icon"></i> Regenerate AUTH_TOKEN</button>
+    <pre style="margin-left:20px;">
+
+
+      Day 1 Achievement
+      -----------------
+      To get the hackvent day 21 (muffinCTF day 1), you have achieve the following requirements,
+      in at least 2 of the last 5 ticks (1 tick = 3 minutes).
+
+      Have garden or/and bakery running with the following stats:
+
+        attack points > 0
+        maximal defense points
+        maximal availability points
+
+      You can see in the list if you have achieved the day 1 achievement for a certain tick.
+
+      Day 2 Achievement
+      -----------------
+      To get the hackvent day 22 (muffinCTF day 2), you have achieve the following requirements,
+      in at least 2 of the last 5 ticks (1 tick = 3 minutes).
+
+      Have mill or/and port running with the following stats:
+
+        attack points > 20
+        maximal defense points
+        maximal availability points
+
+      You can see in the list if you have achieved the day 2 achievement for a certain tick.
+
+      Day 3 Achievement
+      -----------------
+      To get the hackvent day 23 (muffinCTF day 3), you have achieve the following requirements,
+      in at least 2 of the last 5 ticks (1 tick = 3 minutes).
+
+      Have barracks or/and keep running with the following stats:
+
+        attack points > 20
+        maximal defense points
+        maximal availability points
+
+      You can see in the list if you have achieved the day 3 achievement for a certain tick.
+
+
+      Hackvent Flags gathered:
+      -----------------------
+
+      {% for flag in flags %}
+        {{ flag }}
+      {% endfor %}
+
+      Your service stats:
+    </pre>
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th><img src="static/img/scoreboard/hard_24.png" width="20px" style="image-rendering: pixelated;" />&nbsp;&nbsp;Hackvent Flag Criterias</th>
+          <th><i class="clock outline icon"></i> Tick</th>
+          <th><img src="static/img/scoreboard/score.png" width="20px" style="image-rendering: pixelated;" />&nbsp;&nbsp;Score</th>
+          {% for service_name in ['bakery', 'garden', 'mill', 'port', 'barracks', 'keep'] %}
+            <th><img src="static/img/scoreboard/{{service_name}}.png" width="20px" style="image-rendering: pixelated;" />&nbsp;&nbsp;{{service_name}}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for tick in sorted(player_stats.keys())[::-1] %}
+          <tr>
+            <td>
+              {% if(player_stats[tick]['day_1_criteria'] == True) %}
+                <b style="color:green;">Day 1 achieved</b><br />
+              {% else %}
+                <b style="color:red;">Day 1 not achieved</b><br />
+              {% endif %}
+              {% if(player_stats[tick]['day_2_criteria'] == True) %}
+                <b style="color:green;">Day 2 achieved</b><br />
+              {% else %}
+                <b style="color:red;">Day 2 not achieved</b><br />
+              {% endif %}
+              {% if(player_stats[tick]['day_3_criteria'] == True) %}
+                <b style="color:green;">Day 3 achieved</b><br />
+              {% else %}
+                <b style="color:red;">Day 3 not achieved</b><br />
+              {% endif %}
+            </td>
+            <td>{{ tick }}</td>
+            <td>{{ player_stats[tick]['score'] }}</td>
+              {% for service_name in ['bakery', 'garden', 'mill', 'port', 'barracks', 'keep'] %}
+                <td>
+                  {% if service_name in player_stats[tick]['services'].keys() %}
+                    <b style="color:{{ player_stats[tick]['services'][service_name]['status_color'] }};">STATUS:&nbsp;{{ player_stats[tick]['services'][service_name]['status'] }}</b><br />
+                    <img src="static/img/scoreboard/at.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player_stats[tick]['services'][service_name]['old_attack_points'] }} -> {{ player_stats[tick]['services'][service_name]['attack_points'] }} (+{{ player_stats[tick]['services'][service_name]['inc_attack_points'] }} / {{ player_stats[tick]['number_of_players']*20 }} )<br />
+                    <img src="static/img/scoreboard/def.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player_stats[tick]['services'][service_name]['old_defense_points'] }} -> {{ player_stats[tick]['services'][service_name]['defense_points'] }} (+{{ player_stats[tick]['services'][service_name]['inc_defense_points'] }} / {{ player_stats[tick]['number_of_players'] }} )<br />
+                    <img src="static/img/scoreboard/av.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player_stats[tick]['services'][service_name]['old_availability_points'] }} -> {{ player_stats[tick]['services'][service_name]['availability_points'] }} (+{{ player_stats[tick]['services'][service_name]['inc_availability_points'] }} / {{ player_stats[tick]['number_of_players'] }} )
+                  {% endif %}
+                </td>
+              {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+  {% endif %}
+  <pre>
+
+
+
+
+
+  </pre>
+</body>
+</html>

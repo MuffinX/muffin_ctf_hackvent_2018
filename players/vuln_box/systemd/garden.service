@@ -1,0 +1,10 @@
+[Unit]
+Description=Garden Service
+
+[Service]
+User=garden
+Type=simple
+ExecStart=/usr/bin/python /home/garden/main.py
+
+[Install]
+WantedBy=multi-user.target

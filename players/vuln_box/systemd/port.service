@@ -1,0 +1,23 @@
+[Unit]
+Description=Apache Tomcat
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+Environment=TOMCAT_JAVA_HOME=/usr/bin/java
+Environment=CATALINA_PID=/opt/tomcat/tomcat-latest/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat/tomcat-latest
+Environment=CATALINA_BASE=/opt/tomcat/tomcat-latest
+
+WorkingDirectory=/opt/tomcat/tomcat-latest
+
+ExecStart=/opt/tomcat/tomcat-latest/bin/startup.sh
+ExecStop=/opt/tomcat/tomcat-latest/bin/shutdown.sh
+
+User=tomcat
+Group=tomcat
+
+[Install]
+WantedBy=multi-user.target
+

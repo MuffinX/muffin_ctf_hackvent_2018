@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>muffinCTF</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css">
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/semantic.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+</head>
+<body>
+  <div class="ui stackable menu">
+    <div class="item" onclick="$('#viewport').load('home');">
+      <img src="/static/img/favicon.ico" style="image-rendering: pixelated;">
+      &nbsp; &nbsp; <b> [ muffinCTF ] </b>
+    </div>
+    <a class="item" onclick="$('#viewport').load('news');">News</a>
+    <a class="item" onclick="$('#viewport').load('visualization');">Visualization</a>
+    <a class="item" onclick="$('#viewport').load('story');">Story</a>
+    <a class="item" onclick="$('#viewport').load('how2play');">How2play</a>
+    <a class="item" onclick="$('#viewport').load('rules');">Rules</a>
+    <a class="item" onclick="$('#viewport').load('services');">Services</a>
+    <a class="item" onclick="$('#viewport').load('scoreboard');">Scoreboard</a>
+    <a class="item" onclick="$('#viewport').load('prizes');">Prizes</a>
+    <a class="item" onclick="$('#viewport').load('about');">About</a>
+    <div class="right menu">
+      {% if session.get('user') %}
+        <a class="item"><b>Logged in as {{ user }}</b></a>
+        <a class="item" onclick="$('#viewport').load('flags_stats');">Flags / Stats</a>
+        <a class="item" href="/logout">Logout</a>
+      {% endif %}
+      <a class="item" href="https://twitter.com/_muffinx"><i class="blue flag icon"></i>&nbsp; muffinCTF by muffinx &nbsp; <i class="blue flag icon"></i></a>
+      <a class="item" href="https://toen.itch.io/toens-medieval-strategy"><i class="red heart icon"></i>&nbsp; Using Toens Medieval Strategy Sprite Pack v.1.0 &nbsp; <i class="red heart icon"></i></a>
+    </div>
+  </div>
+  <div id="viewport" style="margin-top:-5px;"></div>
+  <script>
+    $('#viewport').load('home');
+  </script>
+</body>
+</html>

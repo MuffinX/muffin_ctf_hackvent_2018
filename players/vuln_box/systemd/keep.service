@@ -1,0 +1,10 @@
+[Unit]
+Description=Keep Service
+
+[Service]
+User=keep
+Type=simple
+#ExecStart=/usr/bin/php -S 0.0.0.0:8086 -t /home/bakery/bakery
+
+[Install]
+WantedBy=multi-user.target

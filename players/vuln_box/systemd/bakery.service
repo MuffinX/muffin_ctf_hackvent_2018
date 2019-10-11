@@ -1,0 +1,10 @@
+[Unit]
+Description=Bakery Service
+
+[Service]
+User=bakery
+Type=simple
+ExecStart=/usr/bin/php -S 0.0.0.0:8081 -t /home/bakery/
+
+[Install]
+WantedBy=multi-user.target

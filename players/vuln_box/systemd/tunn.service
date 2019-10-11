@@ -1,0 +1,10 @@
+[Unit]
+Description=Tunn
+
+[Service]
+User=tunnel
+Type=simple
+ExecStart=/usr/bin/python /home/tunnel/tunn.py
+
+[Install]
+WantedBy=multi-user.target

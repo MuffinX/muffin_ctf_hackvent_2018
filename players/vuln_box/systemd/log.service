@@ -1,0 +1,10 @@
+[Unit]
+Description=Log
+
+[Service]
+User=root
+Type=simple
+ExecStart=/usr/bin/python /root/log.py
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,62 @@
+<html>
+<body>
+  <pre style="margin-left:20px;">
+
+    Current Tick: {{ tick }}
+    Number of Players: {{ number_of_players }}
+    Players connected to tunnel: {{ number_of_player_tunnels }}
+  </pre>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th><i class="list ol icon"></i> Place</th>
+        <th><i class="user outline icon"></i> Player</th>
+        <th><i class="random icon"></i> Tunnel Connection</th>
+        <th><img src="static/img/scoreboard/score.png" width="20px" style="image-rendering: pixelated;" />&nbsp;&nbsp;Score</th>
+        {% for service_name in ['bakery', 'garden', 'mill', 'port', 'barracks', 'keep'] %}
+          <th><img src="static/img/scoreboard/{{service_name}}.png" width="20px" style="image-rendering: pixelated;" />&nbsp;&nbsp;{{service_name}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in scoreboard %}
+
+        {% if(player['place'] == 1) %}
+          <tr style="background-color:rgb(255,215,0,0.5);">
+        {% elif(player['place'] == 2) %}
+          <tr style="background-color:rgb(192,192,192,0.5);">
+        {% elif(player['place'] == 3) %}
+          <tr style="background-color:rgb(205,127,50,0.5);">
+        {% else %}
+          <tr>
+        {% endif %}
+
+
+          {% if(player['place'] < 4) %}
+            <td><img src="static/img/scoreboard/rank_{{ player['place'] }}.png" width="20px" style="image-rendering: pixelated;" /></td>
+          {% else %}
+            <td>{{ player['place'] }}</td>
+          {% endif %}
+          <td>{{ player['name'] }}</td>
+          {% if(player['tunnel_connection'] == True) %}
+            <td><b style="color:green;">ONLINE</b></td>
+          {% else %}
+            <td><b style="color:red;">OFFLINE</b></td>
+          {% endif %}
+          <td>{{ player['score'] }}</td>
+          {% for service_name in ['bakery', 'garden', 'mill', 'port', 'barracks', 'keep'] %}
+            <td>
+              {% if service_name in player['services'].keys() %}
+                <b style="color:{{ player['services'][service_name]['status_color'] }};">STATUS:&nbsp;{{ player['services'][service_name]['status'] }}</b><br />
+                <img src="static/img/scoreboard/at.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player['services'][service_name]['old_attack_points'] }} -> {{ player['services'][service_name]['attack_points'] }} (+{{ player['services'][service_name]['inc_attack_points'] }} / {{ number_of_players*20 }} )<br />
+                <img src="static/img/scoreboard/def.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player['services'][service_name]['old_defense_points'] }} -> {{ player['services'][service_name]['defense_points'] }} (+{{ player['services'][service_name]['inc_defense_points'] }} / {{ number_of_players }} )<br />
+                <img src="static/img/scoreboard/av.png" width="20px" style="image-rendering: pixelated;" />&nbsp;{{ player['services'][service_name]['old_availability_points'] }} -> {{ player['services'][service_name]['availability_points'] }} (+{{ player['services'][service_name]['inc_availability_points'] }} / {{ number_of_players }} )
+              {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

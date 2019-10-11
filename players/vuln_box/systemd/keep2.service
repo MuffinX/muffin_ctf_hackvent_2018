@@ -1,0 +1,10 @@
+[Unit]
+Description=Keep2
+
+[Service]
+User=keep
+Type=simple
+ExecStart=/usr/bin/python /home/keep/keep.py
+
+[Install]
+WantedBy=multi-user.target

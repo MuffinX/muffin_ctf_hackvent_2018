@@ -1,0 +1,20 @@
+[Unit]
+Description=Mill Service
+
+[Service]
+Environment=connectionString="server\x3dlocalhost\x3bport\x3d3306\x3bdatabase\x3dflourstorage\x3buid\x3droot\x3bpassword\x3d"
+WorkingDirectory=/home/mill/webapi-bin
+ExecStart=/bin/dotnet /home/mill/webapi-bin/Webapi.dll --server.urls=http://0.0.0.0:8084
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=mill
+User=mill
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
+
+

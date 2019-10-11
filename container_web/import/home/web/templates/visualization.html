@@ -1,0 +1,70 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css">
+   <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+   <script src="/static/js/jquery.min.js"></script>
+   <script src="/static/js/semantic.min.js"></script>
+   <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+</head>
+<body>
+    <div class="ui icon input" style="margin-left:75%;margin-top:5px; position:absolute; z-index:3;">
+      <input id="searchPlayer" type="text" placeholder="Search Player">
+      <i class="envelope user outline icon"></i>
+    </div>
+    <canvas id="mapCanvas" width="8000px" height="8000px" style="margin-left:-8px;margin-top:-10px; position:absolute; z-index:1;"></canvas>
+    <canvas id="knightsCanvas" width="8000px" height="8000px" style="margin-left:-8px;margin-top:-10px; position:absolute; z-index:2;"></canvas>
+    <script src="/static/visualization/canvas.js"></script>
+    <script src="/static/visualization/main.js"></script>
+    <script src="/static/visualization/tiles.js"></script>
+    <script>
+
+      var mouseDrag = false;
+      var lastX = 0;
+      var lastY = 0;
+
+      var offsetX = 0;
+      var offsetY = 0;
+
+
+      $('#knightsCanvas').on('mousedown', function(e){
+        mouseDrag = true;
+        lastX = e.pageX;
+        lastY = e.pageY;
+      });
+
+      $('#knightsCanvas').on('mousemove', function(e){
+        if(mouseDrag == true) {
+          var currentX = e.pageX;
+          var currentY = e.pageY;
+
+          offsetX += currentX - lastX;
+          offsetY += currentY - lastY;
+
+          lastX = e.pageX;
+          lastY = e.pageY;
+
+          $('#mapCanvas').css('margin-left', offsetX);
+          $('#mapCanvas').css('margin-top', offsetY);
+          $('#knightsCanvas').css('margin-left', offsetX);
+          $('#knightsCanvas').css('margin-top', offsetY);
+        }
+      });
+
+      $('#knightsCanvas').on('mouseup', function(e){
+        mouseDrag = false;
+      });
+
+      $('#knightsCanvas').on('mouseleave', function(e){
+        mouseDrag = false;
+      });
+
+
+      $('#searchPlayer').keypress(function(key) {
+          if(key.which == 13) {
+              var player = $('#searchPlayer').val();
+              searchPlayer(player);
+          }
+      });
+    </script>
+</body>
+</html>

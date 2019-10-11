@@ -1,0 +1,19 @@
+[Unit]
+Description=Mill Frontend Service
+
+[Service]
+WorkingDirectory=/home/mill/mill-bin
+ExecStart=/bin/dotnet /home/mill/mill-bin/Mill.dll --env.WebRootPath="/home/mill/mill-bin/wwwroot/" --server.urls=http://0.0.0.0:9084 
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=millfr
+User=mill
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
+
+

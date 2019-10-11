@@ -1,0 +1,11 @@
+[Unit]
+Description=Barracks Service
+
+[Service]
+User=barracks
+Type=simple
+WorkingDirectory=/home/barracks/
+ExecStart=/home/barracks/main.py
+
+[Install]
+WantedBy=multi-user.target
